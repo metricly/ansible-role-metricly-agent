@@ -14,16 +14,18 @@
     path: "/opt/netuitive-agent/conf"
   register: agentstat
 
+# Print message to console if skipping repo/package installation 
 - debug:
     msg: "Metricly agent is already installed on {{ansible_hostname}}. Skipping installation."
   when: agentstat.stat.exists == True
 
-# Import distro specific repo and package installation tasks
+# Import distro specific repo/package installation tasks
 - name: Installing repo and agent
   include_tasks: "{{ ansible_os_family }}.yml"
   when: agentstat.stat.exists == False
 
-- name: Configuring conf file...
+# Use variables to edit the conf file to reach the desired state; restart agent if any changes were made
+- name: Configuring agent conf file
   lineinfile:
     path: "{{ netuitive_conf_file }}"
     regexp: "{{ item.regexp }}"

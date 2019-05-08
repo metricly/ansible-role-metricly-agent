@@ -1,3 +1,6 @@
+#Vars file
+#The variable definitions in this file take precedence over the definitions in defaults/main.yml
+
 # Enter your Metricly API key below:
 metricly_api_key:
 
