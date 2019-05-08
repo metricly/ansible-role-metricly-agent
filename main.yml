@@ -1,6 +1,6 @@
 - hosts: "{{ target_hosts }}"
   become: yes
-  gather_facts: no
+  gather_facts: yes
 
   roles:
   - metricly-agent
