@@ -1,0 +1,47 @@
+---
+# This role installs and configures the Metricly Agent on a RedHat- or Debian-based Linux server. 
+# You must first enter your Metricly API key in vars/main.yml
+# Alternatively, you can include the apikey on the command line as an extra variable, using:
+#   "--extra-vars=metricly_api_key=<your api key>"
+
+
+#- name: "Install Python on target host (will do nothing if already installed)"
+#  raw: test -e /usr/bin/python || (apt install -y python-minimal)
+
+- name: Gathering facts...
+  setup:
+    gather_timeout: 5
+
+- name: Checking whether API key is set
+  fail: 
+    msg: "Please set Metricly API key before continuing."
+  when: metricly_api_key is not string
+
+- name: Checking whether agent is already installed
+  stat:
+    path: "/opt/netuitive-agent/conf"
+  register: agentstat
+
+- debug:
+    msg: "Metricly agent is already installed on {{ansible_hostname}}. Skipping installation."
+  when: agentstat.stat.exists == True
+
+# Import distro specific repo and package installation tasks
+- name: Installing repo and agent
+  include_tasks: "{{ ansible_os_family }}.yml"
+  when: agentstat.stat.exists == False
+
+- name: Configuring conf file...
+  lineinfile:
+    path: "{{ netuitive_conf_file }}"
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+  with_items: "{{ configure }}"
+  notify: restart agent
+
+- ini_file:
+    path: "{{ netuitive_conf_file }}"
+    section: "[NetuitiveDockerCollector]"
+    option: enabled
+    value: "{{ enable_docker_collector }}"
+  notify: restart agent

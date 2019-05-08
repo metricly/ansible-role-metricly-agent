@@ -1,0 +1,10 @@
+# Enter your Metricly API key below:
+metricly_api_key:
+
+# You can override the playbook's default values by uncommenting a line and modifying the value:
+
+#netuitive_conf_file: "/opt/netuitive-agent/conf/netuitive-agent.conf"
+#statsd_listen_port: "8125"
+#statsd_listen_ip: "127\.0\.0\.1"  #please include backslashes before the periods in the IP address
+#enable_docker_collector: "True"
+

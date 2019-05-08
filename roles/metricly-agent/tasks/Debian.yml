@@ -1,0 +1,14 @@
+- name: Installing APT repo...
+  get_url:
+    url: https://repos.app.netuitive.com/netuitive.gpg
+    dest: /tmp/netuitive.gpg
+- apt_key:
+    file: /tmp/netuitive.gpg
+- apt_repository:
+    repo: "deb https://repos.app.netuitive.com/deb/ stable main"
+
+- name: Installing agent...
+  apt:
+    name: netuitive-agent
+    state: installed  # this could be set to "latest" if we want users to constantly upgrade the agent
+

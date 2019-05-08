@@ -1,0 +1,13 @@
+- name: Installing YUM repo...
+  yum_repository:
+    name: netuitive-agent
+    description: Metricly agent repo
+    baseurl: https://repos.app.netuitive.com/rpm/x86_64/
+    gpgkey: https://repos.app.netuitive.com/RPM-GPG-KEY-netuitive
+    gpgcheck: yes
+
+- name: Installing agent...
+  yum:
+    name: netuitive-agent
+    state: installed   # this could be set to "latest" if we want people to constantly update the agent
+

@@ -1,0 +1,5 @@
+- name: restart agent
+  service:
+    name: netuitive-agent
+    enabled: yes
+    state: restarted
