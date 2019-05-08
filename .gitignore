@@ -1,0 +1,5 @@
+# ignore Ansible working environment files
+**/*.retry
+**/inventory.yml
+**/ansible.cfg
+**/*.pem
