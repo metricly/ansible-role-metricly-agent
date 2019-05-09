@@ -16,19 +16,29 @@ common_configure:
   - regexp: '#?\s?hostname_method\s=\s'
     line:   'hostname_method = {{ hostname_method }}'
 
+
 base_configure:
   - regexp: '#?\s?listen_port\s=\s'
     line:   'listen_port = {{ statsd_listen_port }}'
   - regexp: '#?\s?listen_ip\s=\s'
     line:   'listen_ip = {{ statsd_listen_ip }}'
 
-simple_configure:
+base_configure_ini:
+  - section: '[BaseCollector]'
+    value: 'True'
+  - section: '[SimpleCollector]'
+    value: 'False'
+  - section: '[NetuitiveDockerCollector]'
+    value: 'True'
+
+simple_configure_ini:
   - section: '[BaseCollector]'
     value: 'False'
   - section: '[SimpleCollector]'
     value: 'True'
+  - section: '[NetuitiveDockerCollector]'
+    value: 'False'
 
 hostname_method: 'smart'
 statsd_listen_port: '8125'
 statsd_listen_ip: '127.0.0.1'
-enable_docker_collector: 'True'

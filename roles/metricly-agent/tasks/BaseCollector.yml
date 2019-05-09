@@ -9,7 +9,9 @@
 
 - ini_file:
     path: "{{ netuitive_conf_file }}"
-    section: "[NetuitiveDockerCollector]"
+    section: "{{ item.section }}"
     option: enabled
-    value: "{{ enable_docker_collector }}"
+    value: "{{ item.value }}"
+  with_items: "{{ base_configure_ini }}"
   notify: restart agent
+

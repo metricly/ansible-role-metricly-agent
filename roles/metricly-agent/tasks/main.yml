@@ -32,9 +32,13 @@
   with_items: "{{ common_configure }}"
   notify: restart agent
 
+- debug:
+    msg: "{{ use_simple_collector }}"
 
 - name: Configuring for Base Collector mode
   include_tasks: "BaseCollector.yml"
+  when: use_simple_collector == False
 
 - name: Configuring for Simple Collector mode
   include_tasks: "SimpleCollector.yml"
+  when: use_simple_collector == True

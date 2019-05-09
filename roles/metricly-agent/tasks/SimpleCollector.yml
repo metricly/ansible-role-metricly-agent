@@ -1,11 +1,9 @@
-
-# Does hostname need to be set to "smart?"
-#placeholder
+# Simple Collector Config Tasks
 - ini_file:
     path: "{{ netuitive_conf_file }}"
     section: "{{ item.section }}"
     option: enabled
     value: "{{ item.value }}"
-  with_items: "{{ simple_configure }}"
+  with_items: "{{ simple_configure_ini }}"
   notify: restart agent
 
