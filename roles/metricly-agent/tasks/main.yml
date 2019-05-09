@@ -24,18 +24,17 @@
   include_tasks: "{{ ansible_os_family }}.yml"
   when: agentstat.stat.exists == False
 
-# Use variables to edit the conf file to reach the desired state; restart agent if any changes were made
-- name: Configuring agent conf file
+- name: Configuring common settings in agent conf file
   lineinfile:
     path: "{{ netuitive_conf_file }}"
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
-  with_items: "{{ configure }}"
+  with_items: "{{ common_configure }}"
   notify: restart agent
 
-- ini_file:
-    path: "{{ netuitive_conf_file }}"
-    section: "[NetuitiveDockerCollector]"
-    option: enabled
-    value: "{{ enable_docker_collector }}"
-  notify: restart agent
+
+- name: Configuring for Base Collector mode
+  include_tasks: "BaseCollector.yml"
+
+- name: Configuring for Simple Collector mode
+  include_tasks: "SimpleCollector.yml"

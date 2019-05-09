@@ -1,0 +1,15 @@
+# Use variables to edit the conf file to reach the desired state; restart agent if any changes were made
+- name: Configuring agent conf file for base collector
+  lineinfile:
+    path: "{{ netuitive_conf_file }}"
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+  with_items: "{{ base_configure }}"
+  notify: restart agent
+
+- ini_file:
+    path: "{{ netuitive_conf_file }}"
+    section: "[NetuitiveDockerCollector]"
+    option: enabled
+    value: "{{ enable_docker_collector }}"
+  notify: restart agent

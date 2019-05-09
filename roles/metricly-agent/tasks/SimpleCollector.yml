@@ -1,0 +1,11 @@
+
+# Does hostname need to be set to "smart?"
+#placeholder
+- ini_file:
+    path: "{{ netuitive_conf_file }}"
+    section: "{{ item.section }}"
+    option: enabled
+    value: "{{ item.value }}"
+  with_items: "{{ simple_configure }}"
+  notify: restart agent
+
