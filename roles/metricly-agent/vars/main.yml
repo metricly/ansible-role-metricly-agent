@@ -4,10 +4,15 @@
 # Enter your Metricly API key below:
 metricly_api_key:
 
-# You can override the playbook's default values by uncommenting a line and modifying the value:
+# SIMPLE COLLECTOR CONFIG
+# Uncomment the line below to deploy the simple collector
+#use_simple_collector: True
 
+# BASE COLLECTOR CONFIG
+# The base collector is deployed by default.
+# If you want the base collector with default values, you don't need to change anything.
+# If you wish to modify the default values, uncomment and edit any of the line below.
 #netuitive_conf_file: "/opt/netuitive-agent/conf/netuitive-agent.conf"
 #statsd_listen_port: "8125"
 #statsd_listen_ip: "127\.0\.0\.1"  #please include backslashes before the periods in the IP address
 #enable_docker_collector: "True"
-

@@ -4,19 +4,29 @@
 
 
 netuitive_conf_file: "/opt/netuitive-agent/conf/netuitive-agent.conf"
+  
+use_simple_collector: False
 
 # Using single quotes for the regexp/line values below to simplify issues with escape characters
-configure:
+common_configure:
   - regexp: 'url.*=.*'
     line:   'url = https://api.app.netuitive.com/ingest/infrastructure'
   - regexp: 'api_key.*=.*'
     line:   'api_key = {{ metricly_api_key }}'
+  - regexp: '#?\s?hostname_method\s=\s'
+    line:   'hostname_method = {{ hostname_method }}'
+
+base_configure:
   - regexp: '#?\s?listen_port\s=\s'
     line:   'listen_port = {{ statsd_listen_port }}'
   - regexp: '#?\s?listen_ip\s=\s'
     line:   'listen_ip = {{ statsd_listen_ip }}'
-  - regexp: '#?\s?hostname_method\s=\s'
-    line:   'hostname_method = {{ hostname_method }}'
+
+simple_configure:
+  - section: '[BaseCollector]'
+    value: 'False'
+  - section: '[SimpleCollector]'
+    value: 'True'
 
 hostname_method: 'smart'
 statsd_listen_port: '8125'
